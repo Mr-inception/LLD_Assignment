@@ -78,7 +78,7 @@ Open [http://localhost:3000](http://localhost:3000).
 - No user accounts/auth — submissions aren't tied to a learner identity.
 - No diagram/UML input — solutions are submitted as text/pseudocode only, not visual class diagrams.
 - Feedback quality depends on Gemini's output; the prompt enforces JSON structure and grounding, but occasional malformed responses are possible (handled with a try/catch that surfaces a clear error rather than crashing).
-- No retry/rate-limit handling for the Gemini API call — a transient API failure returns a 502 to the client rather than retrying.
+- Retries transient Gemini failures (503/429) up to twice with exponential backoff before returning a 502; other errors (e.g. malformed JSON response) fail immediately without retrying.
 
 ## AI usage
 
